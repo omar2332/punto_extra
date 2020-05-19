@@ -52,6 +52,7 @@ if($_POST){
         </div>
       </div>
 
+      <h2 style = 'margin-top: 50px; text-align: center;'>  Productos</h2>
       <section id="tablaProductos" style = 'margin-top: 100px; margin-left:360px'>
       <table>
 
@@ -81,5 +82,9 @@ if($_POST){
       </table>
       </section>
       <section>
+
+      <button type="button" style="margin-top:40px;position: absolute; right: 0; margin-right:60px; width:100px; height:40px">
+          <a href="index.html">regresar</a>
+      </button>
   </body>
 </html>
