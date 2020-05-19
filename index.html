@@ -49,44 +49,60 @@
       </table>
       </section>
 
-      <section >
-        <section style="width: 65%; margin-right: auto;">
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">Producto</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Seleccionar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td>
-                  <a href="" class="button">
-                      <button type="button" class="btn btn-outline-dark">Dark</button>
-                  </a>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td>
-                    <a href="" class="button">
-                        <button type="button" class="btn btn-outline-dark">Dark</button>
-                    </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <section style="width: 30%; margin-left: auto;">
-            <input class="form-control form-control-lg" type="text" placeholder="Producto" style="width: 80%;;">
-            <input class="form-control form-control-lg" type="text" placeholder="Cantidad" style="width: 60%; margin-left: auto;">
-            <button type="button" class="btn btn-dark" style="width: 40%;">Agregar</button>
-        </section>
-      </section>
+      
+      <div class="container">  
+        <div class="row mi-fila">
+          <div class="col mi-columna">Producto</div>
+          <div class="col mi-columna">Precio</div>
+          <div class="col mi-columna">Seleccionar</div>
+          <div class="col"></div>
+        </div>
+        <div class="row mi-fila">
+          <div class="col mi-columna"></div>
+          <div class="col mi-columna"></div>
+          <div class="col mi-columna">
+              <a href="" class="button">
+                  <button type="button" class="btn btn-outline-dark">Dark</button>
+              </a>
+          </div>
+          <div class="col mi-columna">
+              <input class="form-control form-control-lg" type="text" placeholder="Cantidad">
+          </div>
+        </div>
+        <div class="row mi-fila">
+          <div class="col mi-columna"></div>
+          <div class="col mi-columna"></div>
+          <div class="col mi-columna">
+              <a href="" class="button">
+                  <button type="button" class="btn btn-outline-dark">Dark</button>
+              </a>
+          </div>
+          <div class="col mi-columna">
+              <input class="form-control form-control-lg" type="text" placeholder="Producto">
+          </div>
+        </div>
+        <div class="row mi-fila">
+          <div class="col mi-columna"></div>
+          <div class="col mi-columna"></div>
+          <div class="col mi-columna">
+              <a href="" class="button">
+                  <button type="button" class="btn btn-outline-dark">Dark</button>
+              </a>
+          </div>
+          <div class="col mi-columna">
+              <button type="button" class="btn btn-dark" style="width: 40%;">Agregar</button>
+          </div>
+        </div>
+      </div>
+      <section style="margin-top: auto;">
+          <p>Los mejores productos a los precios mas bajos</p>
+          <button type="button" style="position: absolute; left: 0;">
+            <a href="agregar.php">Agregar producto</a>
+          </button>
+          <button type="button" style="position: absolute; right: 0;">
+            <a href="eliminar.html">Eliminar producto</a>
+          </button>
+          </section>
         <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
