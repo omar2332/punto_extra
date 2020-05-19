@@ -4,34 +4,93 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Tienda de abarrotes</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="css/tabla.css" rel="stylesheet">
   </head>
   <body>
     <heaheader>Tienda de Abarrotes "Los que sobreviven"</heaheader>
     <section id="tablaProductos">
-      <table>
-        <tr>
-          <th>Producto(s)</th>
-          <th>Precio</th>
-          <th>Cantidad en almacen</th>
-        </tr>
-        <tr>
-          <td id="producto">
-                <p>Galletas Emperador</p>
-          </td>
-          <td id="precio">$27.50</td>
-          <td id="cantidad">10</td>
-        </tr>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Producto(s)</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Cantidad en almacen</th>
+            <th scope="col">X</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Galletas Emperador</td>
+            <td>$27.50</td>
+            <td>15</td>
+            <td>
+              <a href="" class="button">
+                  <button type="button" class="btn btn-light">Eliminar</button>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Gansito</td>
+            <td>$7.50</td>
+            <td>25</td>
+            <td>
+                <a href="" class="button">
+                    <button type="button" class="btn btn-light">Eliminar</button>
+                </a>
+            </td>
+          </tr>
+        </tbody>
       </table>
       </section>
-      <section>
-        <p>Los mejores productos a los precios mas bajos</p>
-        <button type="button" style="position: absolute; left: 0;">
-          <a href="agregar.html">Agregar producto</a>
-        </button>
-        <button type="button" style="position: absolute; right: 0;">
-          <a href="eliminar.html">Eliminar producto</a>
-        </button>
+
+      <section >
+        <section style="width: 65%; margin-right: auto;">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Seleccionar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <a href="" class="button">
+                      <button type="button" class="btn btn-outline-dark">Dark</button>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <a href="" class="button">
+                        <button type="button" class="btn btn-outline-dark">Dark</button>
+                    </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </section>
+        <section style="width: 30%; margin-left: auto;">
+            <input class="form-control form-control-lg" type="text" placeholder="Producto" style="width: 80%;;">
+            <input class="form-control form-control-lg" type="text" placeholder="Cantidad" style="width: 60%; margin-left: auto;">
+            <button type="button" class="btn btn-dark" style="width: 40%;">Agregar</button>
+        </section>
+      </section>
+        <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   </body>
 </html>
