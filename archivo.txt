@@ -1,0 +1,10 @@
+<div class="col mi-columna">
+              <input class="form-control form-control-lg" type="text" placeholder="Producto">
+</div>
+
+<div class="col mi-columna">
+              <button type="button" class="btn btn-dark" style="width: 40%;">Agregar</button>
+          </div>
+<div class="col mi-columna">
+              <input class="form-control form-control-lg" type="text" placeholder="Cantidad">
+          </div>

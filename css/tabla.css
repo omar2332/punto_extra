@@ -19,3 +19,10 @@ table, th, td {
 .mi-fila{
     border: 2px solid darkblue;
 }
+
+.center {
+    margin: 50px;
+    width: 120%;
+
+    
+  }

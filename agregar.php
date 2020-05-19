@@ -84,7 +84,7 @@ if($_POST){
       <section>
 
       <button type="button" style="margin-top:40px;position: absolute; right: 0; margin-right:60px; width:100px; height:40px">
-          <a href="index.html">regresar</a>
+          <a href="index.php">regresar</a>
       </button>
   </body>
 </html>

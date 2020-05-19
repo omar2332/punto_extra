@@ -1,3 +1,6 @@
+
+
+<?php include_once 'conexion_pdo.php'; ?>
 <!DOCTYPE html>
 <html lang="es" dir="ltr">
   <head>
@@ -19,26 +22,29 @@
             </tr>
           </thead>
           <tbody>
+          <?php
+            $sql_categorias = 'select * from inventario';
+      
+            $gsent= $pdo -> prepare($sql_categorias);
+            $gsent->execute();
+            $resultado = $gsent->fetchAll();
+            foreach($resultado as $categoria): 
+                                            ?>
             <tr>
-              <td>Producto 1</td>
+            <tr>
+              <td> <?php echo $categoria['descripcion'];?></td>
               <td>
-                  <a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">X</a>
+                  <a href="operacion_eliminar.php?id=<?php echo $categoria['id_inventario'];?>" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">X</a>
               </td>
               <td>
                   <a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Editar</a>
               </td>
             </tr>
-            <tr>
-              <td>Producto 2</td>
-              <td>
-                  <a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">X</a>
-              </td>
-              <td>
-                  <a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Editar</a>
-              </td>
-            </tr>
+            <?php endforeach?>
           </tbody>
         </table>
+
+        <a href="index.php" class="btn btn-secondary btn-lg active mt-5" role="button" aria-pressed="true">Regresar</a>
 
       <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
