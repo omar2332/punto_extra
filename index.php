@@ -44,43 +44,33 @@ if($_POST){
             <th scope="col">#</th>
             <th scope="col">Producto(s)</th>
             <th scope="col">Precio</th>
+            <th scope="col">Cantidad solicitada</th>
             <th scope="col">Cantidad en almacen</th>
             <th scope="col">Total</th>
             <th scope="col">X</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Galletas Emperador</td>
-            <td>$27.50</td>
-            <td>15</td>
-            <td>15</td>
-            <td>
-              <a href="" class="button">
-                  <button type="button" class="btn btn-light">Eliminar</button>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Gansito</td>
-            <td>$7.50</td>
-            <td>25</td>
-            <td>15</td>
-            <td>
+              <th scope="row"></th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
                 <a href="" class="button">
-                    <button type="button" class="btn btn-light">Eliminar</button>
+                  <button type="button" class="btn btn-light">Eliminar</button>
                 </a>
-            </td>
-          </tr>
+              </td>            
+              
+          <tr>
         </tbody>
       </table>
       </section>
     </div>
 
       <div class="container mb-5 mt-5">
-        <form action="" method="post">
+        <form action="accion.php" method="post">
           <div class="form-group">
             <label >Producto</label>
             <input type="text" class="form-control" id="producto"  placeholder="Escriba el producto"  <?php if(isset($_GET['id'])){
@@ -100,13 +90,18 @@ if($_POST){
 
           <div class="form-group">
             <label >Cantidad</label>
-            <input type="number" class="form-control" id="cantidad" placeholder="Escriba el cantidad">
+            <input type="number" class="form-control" name="cantidad_venta" placeholder="Escriba el cantidad">
           
           </div>
           
-          <button type="agregar" class="btn btn-primary">Agregar</button>
-  
+          <button type="submit"  class="btn btn-primary">Agregar</button>
         </form>
+        <section>
+            <button type="button" class="mt-5">
+              <a href="finalizar.php">Finalizar compra</a>
+            </button>
+          </section>
+
       </div>
       
             <h2 class=" text-center mt-5 mb-5">
@@ -136,7 +131,7 @@ if($_POST){
                 <div class="col mi-columna"><?php echo $categoria['cantidad']; ?></div>
                 <div class="col mi-columna">
                     <a href="index.php?id=<?php echo $categoria['id_inventario']; ?>" class="button">
-                        <button type="button" class="btn btn-outline-dark">Dark</button>
+                        <button type="button" class="btn btn-outline-dark">Agregar</button>
                     </a>
                 </div>
                 
@@ -147,8 +142,7 @@ if($_POST){
 
 
 
-
-
+        
 
         <div class="container">
           <section style="margin-top: auto;">

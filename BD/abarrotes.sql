@@ -46,7 +46,6 @@ CREATE TABLE `inventario_venta` (
   `id_venta` int(11) NOT NULL,
   `id_inventario` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `fecha` int(11) NOT NULL,
   `cantidad_venta` int(11) NOT NULL,
   `total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -15,7 +15,7 @@ if($_POST){
 <html lang="es" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Agregar Producto</title>
+    <title>Editar Producto</title>
     <link href="css/registro.css" rel="stylesheet">
     <link href="css/tabla.css" rel="stylesheet">
   </head>
@@ -24,7 +24,7 @@ if($_POST){
         <div>
           <form class="form-horizontal" method="POST">
             <fieldset>
-              <legend class="text-center header">Agregar Producto</legend>
+              <legend class="text-center header">Editar Producto</legend>
               <?php
                     $sql_categorias = 'select * from inventario where id_inventario = '.$_GET['id'];
                    
@@ -37,18 +37,18 @@ if($_POST){
               <div class="form-group">
               
                 <div>
-                  <input type="text"  name = 'descripcion' class="form-control" value="<?php echo $categoria['descripcion'];?>" required>
+                  <input type="text"  placeholder = "Descripción" name = 'descripcion' class="form-control" value="<?php echo $categoria['descripcion'];?>" required>
                 </div>
               </div>
               <div class="form-group">
                 <div>
-                  <input type="text"  name = 'precio' class="form-control" value="<?php echo $categoria['precio'];?>" required>
+                  <input type="text" placeholder = "Precio en venta" name = 'precio' class="form-control" value="<?php echo $categoria['precio'];?>" required>
                 </div>
               </div>
               
               <div>
                 <div>
-                  <input type="number"  name = 'cantidad' class="form-control" value="<?php echo $categoria['cantidad'];?>" required>
+                  <input type="number" placeholder = "Cantidad" name = 'cantidad' class="form-control" value="<?php echo $categoria['cantidad'];?>" required>
                 </div>
               </div>
               <div>
@@ -63,7 +63,7 @@ if($_POST){
       </div>
 
       <button type="button" style="margin-top:40px;position: absolute; right: 0; margin-right:60px; width:100px; height:40px">
-          <a href="index.php">regresar</a>
+          <a href="eliminar.php">regresar</a>
       </button>
   </body>
 </html>
