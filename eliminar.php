@@ -37,7 +37,7 @@
                   <a href="operacion_eliminar.php?id=<?php echo $categoria['id_inventario'];?>" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">X</a>
               </td>
               <td>
-                  <a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Editar</a>
+                  <a href="editar.php?id=<?php echo $categoria['id_inventario'];?>" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Editar</a>
               </td>
             </tr>
             <?php endforeach?>

@@ -75,14 +75,23 @@ if($_POST){
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Producto(s)</th>
             <th scope="col">Precio</th>
+            <th scope="col">Cantidad solicitada</th>
             <th scope="col">Cantidad en almacen</th>
             <th scope="col">Total</th>
             <th scope="col">X</th>
           </tr>
         </thead>
+        <?php
+                $sql_categorias1 = 'SELECT i.descripcion, i.precio, iv.cantidad, iv.cantidad_venta, iv.total, iv.id_inventario_venta FROM inventario i,
+                 inventario_venta iv WHERE i.id_inventario = iv.id_inventario';
+
+                $gsent= $pdo -> prepare($sql_categorias1);
+                $gsent->execute();
+                $resultado = $gsent->fetchAll();
+                foreach($resultado as $categoria ): 
+                                        ?>
         <tbody>
 
           <?php for ($i=0; $i < $_SESSION['posc']; $i++): 
@@ -104,7 +113,9 @@ if($_POST){
           <?php endif ?>
           <?php endfor?>
 
+
         </tbody>
+        <?php endforeach ?>
       </table>
       </section>
     </div>
@@ -138,6 +149,12 @@ if($_POST){
           <button type="submit" class="btn btn-primary">Agregar</button>
   
         </form>
+        <section>
+            <button type="button" class="mt-5">
+              <a href="finalizar.php">Finalizar compra</a>
+            </button>
+          </section>
+
       </div>
       
             <h2 class=" text-center mt-5 mb-5">
@@ -167,19 +184,18 @@ if($_POST){
                 <div class="col mi-columna"><?php echo $categoria['cantidad']; ?></div>
                 <div class="col mi-columna">
                     <a href="index.php?id=<?php echo $categoria['id_inventario']; ?>" class="button">
-                        <button type="button" class="btn btn-outline-dark">Dark</button>
+                        <button type="button" class="btn btn-outline-dark">Agregar</button>
                     </a>
                 </div>
                 
               </div>
               <?php endforeach ?>
-              </div>
-              </div>
+            </div>
+          </div>
 
 
 
-
-
+        
 
         <div class="container">
           <section style="margin-top: auto;">
