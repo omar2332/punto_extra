@@ -41,7 +41,6 @@ if($_POST){
       <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Producto(s)</th>
             <th scope="col">Precio</th>
             <th scope="col">Cantidad solicitada</th>
@@ -50,30 +49,38 @@ if($_POST){
             <th scope="col">X</th>
           </tr>
         </thead>
+        <?php
+                $sql_categorias1 = 'SELECT i.descripcion, i.precio, iv.cantidad, iv.cantidad_venta, iv.total, iv.id_inventario_venta FROM inventario i,
+                 inventario_venta iv WHERE i.id_inventario = iv.id_inventario';
+
+                $gsent= $pdo -> prepare($sql_categorias1);
+                $gsent->execute();
+                $resultado = $gsent->fetchAll();
+                foreach($resultado as $categoria ): 
+                                        ?>
         <tbody>
-              <th scope="row"></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td> <?php echo $categoria['descripcion']; ?> </td>
+              <td> <?php echo $categoria['precio']; ?> </td>
+              <td> <?php echo $categoria['cantidad_venta']; ?> </td>
+              <td> <?php echo $categoria['cantidad']; ?> </td>
+              <td> <?php echo $categoria['total']; ?> </td>
               <td>
-                <a href="" class="button">
+                <a href="operacion_eliminar_venta.php?id=<?php echo $categoria['id_inventario_venta'];?>" class="button">
                   <button type="button" class="btn btn-light">Eliminar</button>
                 </a>
-              </td>            
-              
-          <tr>
+              </td>
+            </tr>            
         </tbody>
+        <?php endforeach ?>
       </table>
       </section>
     </div>
 
       <div class="container mb-5 mt-5">
-        <form action="accion.php" method="post">
+        <form action="accion.php" method="GET">
           <div class="form-group">
             <label >Producto</label>
-            <input type="text" class="form-control" id="producto"  placeholder="Escriba el producto"  <?php if(isset($_GET['id'])){
+            <input type="text" class="form-control" id="producto" name="nombre_producto" placeholder="Escriba el producto"  <?php if(isset($_GET['id'])){
               $sql_categorias = 'select * from inventario where id_inventario ='.$_GET['id'];;
           
               $gsent= $pdo -> prepare($sql_categorias);
@@ -93,6 +100,7 @@ if($_POST){
             <input type="number" class="form-control" name="cantidad_venta" placeholder="Escriba el cantidad">
           
           </div>
+          
           
           <button type="submit"  class="btn btn-primary">Agregar</button>
         </form>
@@ -137,8 +145,8 @@ if($_POST){
                 
               </div>
               <?php endforeach ?>
-              </div>
-              </div>
+            </div>
+          </div>
 
 
 
