@@ -1,21 +1,53 @@
 
-<?php include_once 'conexion_pdo.php';?>
+<?php include_once 'conexion_pdo.php';
+session_start();
+$sql_categorias = 'select count(id_venta) as maxGroup from venta';
+  
+$gsent= $pdo -> prepare($sql_categorias);
+$gsent->execute();
+$test = $gsent->fetch(PDO::FETCH_ASSOC);
+
+$_SESSION['id'] = $test['maxGroup'] +1; 
+$_SESSION['posc'] = 0;
 
 
-<?php
+
 
 if($_POST){
-  $nombre = $_POST['descripcion'];
-  $precio_venta = $_POST['precio'];
-  $cantidad= $_POST['cantidad'];
+  
+    $sql_categorias = 'select * from inventario where descripcion = "'.$_POST['producto'].'"';        
+    $gsent= $pdo -> prepare($sql_categorias);
+    $gsent->execute();
+    $result = $gsent->fetchAll();
+    
+    foreach ($result as $row) {
+      $_SESSION[$_SESSION['posc'] ] = array($row['id_inventario'],$row['descripcion'],$row['precio'], $_POST['cantidad'], ( (int)$_POST['cantidad'] )*( (int)$row['precio'] )    );
+      $_SESSION['posc'] = $_SESSION['posc'] +1;
 
-  $sql_agregar = 'insert into inventario(descripcion,precio,cantidad) values (?,?,?)';
-  $sentencia = $pdo -> prepare($sql_agregar);
-  $sentencia-> execute(array($nombre,$precio_venta,$cantidad));
-  header('location: agregar.php');
+    }
 }
 
 ?>
+
+<?php
+
+    $sql_categorias = 'select * from inventario';
+              
+    $gsent= $pdo -> prepare($sql_categorias);
+    $gsent->execute();
+    $result = $gsent->fetchAll();
+    $array = array();
+    foreach($result as $row){
+        
+        $equipo = utf8_encode($row['descripcion']);
+        array_push($array, $equipo); // equipos
+
+    }
+    
+
+?>
+
+
 
 
 <!DOCTYPE html>
@@ -28,12 +60,14 @@ if($_POST){
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="css/tabla.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
   </head>
   <body>
     <h1 class="py-3 mb-5 text-center"> Tienda de Abarrotes "Los que sobreviven"</h1>
 
-
+    
     <h2 class="ml-5 px-5">Seleccione los productos para la venta</h2>
+
     <div class="container">
       
     
@@ -50,40 +84,37 @@ if($_POST){
           </tr>
         </thead>
         <tbody>
+
+          <?php for ($i=0; $i < $_SESSION['posc']; $i++): 
+           ?>
+          
+           <?php if(isset($_SESSION[$i])): ?>
           <tr>
-            <th scope="row">1</th>
-            <td>Galletas Emperador</td>
-            <td>$27.50</td>
-            <td>15</td>
-            <td>15</td>
+            <th scope="row"> <?php echo $_SESSION[$i][0]; ?></th>
+            <td><?php echo $_SESSION[$i][1]; ?></td>
+            <td><?php echo $_SESSION[$i][2]; ?></td>
+            <td><?php echo $_SESSION[$i][3]; ?></td>
+            <td><?php echo $_SESSION[$i][4]; ?> </td>
             <td>
               <a href="" class="button">
                   <button type="button" class="btn btn-light">Eliminar</button>
               </a>
             </td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Gansito</td>
-            <td>$7.50</td>
-            <td>25</td>
-            <td>15</td>
-            <td>
-                <a href="" class="button">
-                    <button type="button" class="btn btn-light">Eliminar</button>
-                </a>
-            </td>
-          </tr>
+          <?php endif ?>
+          <?php endfor?>
+
         </tbody>
       </table>
       </section>
     </div>
 
       <div class="container mb-5 mt-5">
-        <form action="" method="post">
+        <form  method="POST">
           <div class="form-group">
             <label >Producto</label>
-            <input type="text" class="form-control" id="producto"  placeholder="Escriba el producto"  <?php if(isset($_GET['id'])){
+            <?php var_dump($_SESSION)  ?>
+            <input type="text" class="form-control" id="tag" name = "producto"  placeholder="Escriba el producto"  <?php if(isset($_GET['id'])){
               $sql_categorias = 'select * from inventario where id_inventario ='.$_GET['id'];;
           
               $gsent= $pdo -> prepare($sql_categorias);
@@ -100,11 +131,11 @@ if($_POST){
 
           <div class="form-group">
             <label >Cantidad</label>
-            <input type="number" class="form-control" id="cantidad" placeholder="Escriba el cantidad">
+            <input type="number" class="form-control" name="cantidad" placeholder="Escriba el cantidad" required>
           
           </div>
           
-          <button type="agregar" class="btn btn-primary">Agregar</button>
+          <button type="submit" class="btn btn-primary">Agregar</button>
   
         </form>
       </div>
@@ -167,5 +198,24 @@ if($_POST){
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
+	  
+    <script type="text/javascript" src="js/jquery-ui.js"></script>  
+    
+    <script type="text/javascript">
+		$(document).ready(function () {
+			var items = <?= json_encode($array); ?>
+
+			$("#tag").autocomplete({
+				source: items,
+				select: function (event, item) {
+					var params = {
+						equipo: item.item.value
+					};
+				}
+			});
+		});
+	</script>              
+ 
   </body>
 </html>
