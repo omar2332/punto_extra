@@ -17,6 +17,28 @@ function suma ($pdo, $max){
     return $sumado[0][0];
 }
 
+function contar($pdo, $max){
+    $contar = "SELECT COUNT(id_inventario_venta) AS productos_vendidos FROM inventario_venta WHERE id_venta = $max";
+    $gsent3 = $pdo -> prepare($contar);
+    $gsent3 -> execute();
+    $resultado = $gsent3 -> fetchAll();
+    return $resultado[0][0];
+}
+
+function actualizar_tablas($pdo, $max){
+    $inventario = "SELECT cantidad, cantidad_venta, id_inventario FROM inventario_venta WHERE id_venta = $max";
+    $gsent3 = $pdo -> prepare($inventario);
+    $gsent3 -> execute();
+    $resultados = $gsent3 -> fetchAll();
+    //$contador = contar($pdo, $max);
+    foreach($resultados as $cantidades){
+        $diferencia = $cantidades['cantidad'] - $cantidades['cantidad_venta'];
+        $actualizar = "UPDATE inventario SET cantidad = $diferencia WHERE id_inventario = '$cantidades[id_inventario]'";
+        $gsent3 = $pdo -> prepare($actua);
+        $gsent3 -> execute();
+    }
+}
+
 $sql_checa="SELECT * FROM venta WHERE finalizado = 0";
 $gsent = $pdo->prepare($sql_checa);
 $gsent->execute();
@@ -32,6 +54,7 @@ else{
     $sql_terminar = "UPDATE venta SET finalizado = 1 , total = $suma_total WHERE id_venta = $max_id;";
     $gsent3 = $pdo->prepare($sql_terminar);
     $gsent3 -> execute();
+    actualizar_tablas($pdo, $max_id);
     $mensaje = "Total a pagar: $suma_total";
     echo "<script type='text/javascript'>
         alert('$mensaje');

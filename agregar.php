@@ -23,23 +23,23 @@ if($_POST){
   <body>
     <div style= "size: 75%;">
         <div>
-          <form class="form-horizontal" method="POST">
+          <form class="form-horizontal" method="POST" onsubmit="return validar();">
             <fieldset>
               <legend class="text-center header">Agregar Producto</legend>
               <div class="form-group">
                 <div>
-                  <input type="text" placeholder="Descripcion" name = 'descripcion' class="form-control" required>
+                  <input type="text" placeholder="Descripcion" id="descripcion" name = 'descripcion' class="form-control" required>
                 </div>
               </div>
               <div class="form-group">
                 <div>
-                  <input type="text" placeholder="Precio de venta" name = 'precio' class="form-control" required>
+                  <input type="text" placeholder="Precio de venta" id="precio" name = 'precio' class="form-control" required>
                 </div>
               </div>
               
               <div>
                 <div>
-                  <input type="number" placeholder="Cantidad en almacen" name = 'cantidad' class="form-control" required>
+                  <input type="number" placeholder="Cantidad en almacen" id="cantidad" name = 'cantidad' class="form-control" required>
                 </div>
               </div>
               <div>
@@ -86,5 +86,7 @@ if($_POST){
       <button type="button" style="margin-top:40px;position: absolute; right: 0; margin-right:60px; width:100px; height:40px">
           <a href="index.php">regresar</a>
       </button>
+
+      <script src="js/registro.js"></script>
   </body>
 </html>

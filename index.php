@@ -77,7 +77,7 @@ if($_POST){
     </div>
 
       <div class="container mb-5 mt-5">
-        <form action="accion.php" method="POST">
+        <form action="accion.php" method="POST" onsubmit="return validar();">
           <div class="form-group">
             <label >Producto</label>
             <input type="text" class="form-control" id="producto" name="nombre_producto" placeholder="Escriba el producto"  <?php if(isset($_GET['id'])){
@@ -97,7 +97,7 @@ if($_POST){
 
           <div class="form-group">
             <label >Cantidad</label>
-            <input type="text" class="form-control" name="cantidad_venta" placeholder="Escriba el cantidad">
+            <input type="text" class="form-control" id ="cantidad_venta" name="cantidad_venta" placeholder="Escriba el cantidad">
           
           </div>
            <button type="submit"  class="btn btn-primary" >
@@ -171,5 +171,6 @@ if($_POST){
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="js/registro.js"></script>
   </body>
 </html>

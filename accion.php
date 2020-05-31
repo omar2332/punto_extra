@@ -1,26 +1,25 @@
 <?php
 include_once 'conexion_pdo.php';
 
-$nombreP = $_GET['nombre_producto'];
-$cantidad = $_GET['cantidad_venta'];
-echo $cantidad;
+function insertar($pdo, $total, $id_inventario, $cantidad, $nombre, $cantidad_venta, $id_venta){
+    $sql="INSERT INTO inventario_venta (id_venta, id_inventario, cantidad, cantidad_venta, total) VALUES ($id_venta, $id_inventario, $cantidad, $cantidad_venta, $total)";
+    $gsent = $pdo->prepare($sql);
+    $gsent->execute();
+}
 
-$sql_obtener = "SELECT id_inventario, precio, cantidad, descripcion FROM inventario  WHERE descripcion = '$nombreP';";
+$nombreP = $_POST['nombre_producto'];
+$cantidad_venta = $_POST['cantidad_venta'];
+
+$sql_obtener = "SELECT id_inventario, precio, cantidad FROM inventario  WHERE descripcion = '$nombreP';";
 $gsent = $pdo->prepare($sql_obtener);
 $gsent->execute();
 $busqueda = $gsent->fetchAll();
-//echo ($busqueda['cantidad']);
-//echo($nombreP. $cantidad);
-//$valor = sizeof($busqueda);
-//echo ($valor);
+$total = $cantidad_venta * $busqueda[0]['precio'];
 
-//if(empty($busqueda)){
-  //  echo (empty($busqueda));// 1
-//}
+$gsent2 = $pdo->prepare("SELECT id_venta FROM venta  WHERE finalizado = 0;");
+$gsent2->execute();
+$venta =$gsent2->fetchAll();
 
-//else{
-    //echo $valor;
-//}al ser bidimensional toma el valor por conjunto de datos en este caso vale 0
-
-//header('location: index.php');
+insertar($pdo, $total, $busqueda[0]['id_inventario'], $busqueda[0]['cantidad'], $nombreP, $cantidad_venta, $venta[0]['id_venta']);
+header('location: agregar.php');
 ?>
