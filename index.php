@@ -1,53 +1,49 @@
 
 <?php include_once 'conexion_pdo.php';
+
+include_once './PHP/venta.php';
+include_once './PHP/inventario_producto.php';
+include_once './PHP/producto_venta.php';
+include_once './PHP/sql.php';
+?>
+
+
+<?php
+$error = '';
 session_start();
-$sql_categorias = 'select count(id_venta) as maxGroup from venta';
+if(!isset($_SESSION['venta'])){
+
+  $_SESSION['venta'] =  new venta();
+
+}
+
+$sql_objeto = new sql();
+
+
+if(isset($_POST['nombre_producto']) && $_POST['nombre_producto'] != ''  ){
+  $producto = $sql_objeto->buscar_producto_x_nombre($_POST['nombre_producto']);
+  $producto_objeto = new producto_venta();
   
-$gsent= $pdo -> prepare($sql_categorias);
-$gsent->execute();
-$test = $gsent->fetch(PDO::FETCH_ASSOC);
-
-$_SESSION['id'] = $test['maxGroup'] +1; 
-$_SESSION['posc'] = 0;
-
-
-
-
-if($_POST){
+  $decision = $producto_objeto->set_producto_venta($producto,$_POST['cantidad_venta']);
   
-    $sql_categorias = 'select * from inventario where descripcion = "'.$_POST['producto'].'"';        
-    $gsent= $pdo -> prepare($sql_categorias);
-    $gsent->execute();
-    $result = $gsent->fetchAll();
-    
-    foreach ($result as $row) {
-      $_SESSION[$_SESSION['posc'] ] = array($row['id_inventario'],$row['descripcion'],$row['precio'], $_POST['cantidad'], ( (int)$_POST['cantidad'] )*( (int)$row['precio'] )    );
-      $_SESSION['posc'] = $_SESSION['posc'] +1;
+  if($decision){
+    $_SESSION['venta']-> agregar_producto($producto_objeto);
+    $error = '';
 
-    }
+  }
+  
+  
+
+}else{
+  if(isset($_POST['nombre_producto'])){
+    $error = '<div class="alert alert-danger mt-5" role="alert">
+            Por favor introduzca algun producto
+            </div>';
+  }
+  
 }
 
 ?>
-
-<?php
-
-    $sql_categorias = 'select * from inventario';
-              
-    $gsent= $pdo -> prepare($sql_categorias);
-    $gsent->execute();
-    $result = $gsent->fetchAll();
-    $array = array();
-    foreach($result as $row){
-        
-        $equipo = utf8_encode($row['descripcion']);
-        array_push($array, $equipo); // equipos
-
-    }
-    
-
-?>
-
-
 
 
 <!DOCTYPE html>
@@ -56,18 +52,18 @@ if($_POST){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Tienda de abarrotes</title>
-
+    <?php if( $error != ''  ){
+      echo $error;
+      } ?>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="css/tabla.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
   </head>
   <body>
     <h1 class="py-3 mb-5 text-center"> Tienda de Abarrotes "Los que sobreviven"</h1>
 
-    
-    <h2 class="ml-5 px-5">Seleccione los productos para la venta</h2>
 
+    <h2 class="ml-5 px-5">Seleccione los productos para la venta</h2>
     <div class="container">
       
     
@@ -84,48 +80,34 @@ if($_POST){
           </tr>
         </thead>
         <?php
-                $sql_categorias1 = 'SELECT i.descripcion, i.precio, iv.cantidad, iv.cantidad_venta, iv.total, iv.id_inventario_venta FROM inventario i,
-                 inventario_venta iv, venta v WHERE i.id_inventario = iv.id_inventario AND iv.id_venta = v.id_venta AND v.finalizado = 0 ';
-
-                $gsent= $pdo -> prepare($sql_categorias1);
-                $gsent->execute();
-                $resultado = $gsent->fetchAll();
-                foreach($resultado as $categoria ): 
-                                        ?>
+        
+        for($i=0; $i< $_SESSION['venta']->num_vista; $i++ ): 
+            if(!is_null ($_SESSION['venta']->productos[$i]) ):
+        ?>
         <tbody>
-
-          <?php for ($i=0; $i < $_SESSION['posc']; $i++): 
-           ?>
-          
-           <?php if(isset($_SESSION[$i])): ?>
-          <tr>
-            <th scope="row"> <?php echo $_SESSION[$i][0]; ?></th>
-            <td><?php echo $_SESSION[$i][1]; ?></td>
-            <td><?php echo $_SESSION[$i][2]; ?></td>
-            <td><?php echo $_SESSION[$i][3]; ?></td>
-            <td><?php echo $_SESSION[$i][4]; ?> </td>
-            <td>
-              <a href="" class="button">
+              <td> <?php echo $_SESSION['venta']->productos[$i]->descripcion; ?> </td>
+              <td> $<?php  echo $_SESSION['venta']->productos[$i]->precio; ?> </td>
+              <td> <?php  echo $_SESSION['venta']->productos[$i]->cantidad; ?> </td>
+              <td> <?php echo $_SESSION['venta']->productos[$i]->cantidad_inventario; ?> </td>
+              <td> $<?php echo $_SESSION['venta']->productos[$i]->total; ?> </td>
+              <td>
+                <a href="operacion_eliminar_venta.php?pos=<?php echo $i; ?>" class="button">
                   <button type="button" class="btn btn-light">Eliminar</button>
-              </a>
-            </td>
-          </tr>
-          <?php endif ?>
-          <?php endfor?>
-
-
+                </a>
+              </td>
+            </tr>            
         </tbody>
-        <?php endforeach ?>
+            <?php endif;
+            endfor; ?>
       </table>
       </section>
     </div>
 
       <div class="container mb-5 mt-5">
-        <form  method="POST">
+        <form method="POST" onsubmit="return validar();">
           <div class="form-group">
             <label >Producto</label>
-            <?php var_dump($_SESSION)  ?>
-            <input type="text" class="form-control" id="tag" name = "producto"  placeholder="Escriba el producto"  <?php if(isset($_GET['id'])){
+            <input type="text" class="form-control" id="producto" name="nombre_producto" placeholder="Escriba el producto"  <?php if(isset($_GET['id'])){
               $sql_categorias = 'select * from inventario where id_inventario ='.$_GET['id'];;
           
               $gsent= $pdo -> prepare($sql_categorias);
@@ -142,20 +124,21 @@ if($_POST){
 
           <div class="form-group">
             <label >Cantidad</label>
-            <input type="number" class="form-control" name="cantidad" placeholder="Escriba el cantidad" required>
+            <input type="text" class="form-control" id ="cantidad_venta" name="cantidad_venta" placeholder="Escriba el cantidad">
           
           </div>
-          
-          <button type="submit" class="btn btn-primary">Agregar</button>
-  
+           <button type="submit"  class="btn btn-primary" >
+              Agregar
+           </button>
         </form>
 
       </div>
       <div class="container mb-5 mt-5">
         <section>
-            <button type="button" class="mt-5" style="">
-              <a href="empezar_venta.php">Nueva compra/Finalizar compra</a>
-            </button>
+
+              <a class = 'btn btn-success mt-5' href="empezar_venta.php">Finalizar compra</a>
+
+              <a class="btn btn-secondary mt-5" href = 'destruir_sesion.php'>Nueva compra</a>
         </section>
       </div>
       
@@ -216,24 +199,6 @@ if($_POST){
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/jquery-1.12.1.min.js"></script>
-	  
-    <script type="text/javascript" src="js/jquery-ui.js"></script>  
-    
-    <script type="text/javascript">
-		$(document).ready(function () {
-			var items = <?= json_encode($array); ?>
-
-			$("#tag").autocomplete({
-				source: items,
-				select: function (event, item) {
-					var params = {
-						equipo: item.item.value
-					};
-				}
-			});
-		});
-	</script>              
- 
+    <script src="js/registro.js"></script>
   </body>
 </html>
