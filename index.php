@@ -51,7 +51,7 @@ if($_POST){
         </thead>
         <?php
                 $sql_categorias1 = 'SELECT i.descripcion, i.precio, iv.cantidad, iv.cantidad_venta, iv.total, iv.id_inventario_venta FROM inventario i,
-                 inventario_venta iv WHERE i.id_inventario = iv.id_inventario';
+                 inventario_venta iv, venta v WHERE i.id_inventario = iv.id_inventario AND iv.id_venta = v.id_venta AND v.finalizado = 0 ';
 
                 $gsent= $pdo -> prepare($sql_categorias1);
                 $gsent->execute();
@@ -77,7 +77,7 @@ if($_POST){
     </div>
 
       <div class="container mb-5 mt-5">
-        <form action="accion.php" method="GET">
+        <form action="accion.php" method="POST">
           <div class="form-group">
             <label >Producto</label>
             <input type="text" class="form-control" id="producto" name="nombre_producto" placeholder="Escriba el producto"  <?php if(isset($_GET['id'])){
@@ -97,19 +97,21 @@ if($_POST){
 
           <div class="form-group">
             <label >Cantidad</label>
-            <input type="number" class="form-control" name="cantidad_venta" placeholder="Escriba el cantidad">
+            <input type="text" class="form-control" name="cantidad_venta" placeholder="Escriba el cantidad">
           
           </div>
-          
-          
-          <button type="submit"  class="btn btn-primary">Agregar</button>
+           <button type="submit"  class="btn btn-primary" >
+              Agregar
+           </button>
         </form>
-        <section>
-            <button type="button" class="mt-5">
-              <a href="finalizar.php">Finalizar compra</a>
-            </button>
-          </section>
 
+      </div>
+      <div class="container mb-5 mt-5">
+        <section>
+            <button type="button" class="mt-5" style="">
+              <a href="empezar_venta.php">Nueva compra/Finalizar compra</a>
+            </button>
+        </section>
       </div>
       
             <h2 class=" text-center mt-5 mb-5">
