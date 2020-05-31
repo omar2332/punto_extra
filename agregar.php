@@ -23,7 +23,7 @@ if($_POST){
   <body>
     <div style= "size: 75%;">
         <div>
-          <form class="form-horizontal" method="POST" onsubmit="return validar();">
+          <form class="form-horizontal" method="POST" onsubmit="return validar_registro_inventario();">
             <fieldset>
               <legend class="text-center header">Agregar Producto</legend>
               <div class="form-group">

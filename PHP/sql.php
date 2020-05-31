@@ -12,7 +12,7 @@ class sql{
         $usuario = 'root';
         $contraseña = 'root';    
         try {
-            $this->$pdo = new PDO('mysql:host=localhost:3307;dbname=abarrotes', $usuario, $contraseña);
+            $this->$pdo = new PDO('mysql:host=localhost:3306;dbname=abarrotes', $usuario, $contraseña);
         } catch (PDOException $e) {
             echo "¡Error!: " . $e->getMessage() . "<br/>";
             die();

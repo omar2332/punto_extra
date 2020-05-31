@@ -1,0 +1,9 @@
+Integrantes:
+    Batún Bolaños Fernando
+    Fajardo Rojas Edgar Alonso
+    Silva Salazar Omar Sebastián
+
+Instrucciones:
+    1.- Checar el archivo conexion_pdo.php y de ser necesario acoplarlo a su host, port, user y password.
+    2.- De la carpeta BD, importar el archivo abarrotes.sql en formato MYSQL.
+    3.- A su vez, en la carpeta PHP encontrar el archivo sql.php y repetir el paso 1 en la variable $pdo

@@ -9,6 +9,8 @@ class inventario_producto{
 
     function __construct() {}
 
+    
+
 
     
 }

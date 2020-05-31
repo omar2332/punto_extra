@@ -104,7 +104,7 @@ if(isset($_POST['nombre_producto']) && $_POST['nombre_producto'] != ''  ){
     </div>
 
       <div class="container mb-5 mt-5">
-        <form method="POST" onsubmit="return validar();">
+        <form method="POST" onsubmit="return validar_registro_inventario_venta();">
           <div class="form-group">
             <label >Producto</label>
             <input type="text" class="form-control" id="producto" name="nombre_producto" placeholder="Escriba el producto"  <?php if(isset($_GET['id'])){
@@ -174,7 +174,13 @@ if(isset($_POST['nombre_producto']) && $_POST['nombre_producto'] != ''  ){
                 </div>
                 
               </div>
-              <?php endforeach ?>
+              <?php 
+              if($categoria['cantidad'] <= 0){
+                echo('<div class="alert alert-danger mt-5" role="alert">
+            El producto '.$categoria['descripcion'].' se acabo
+            </div>');
+              }
+              endforeach ?>
             </div>
           </div>
 

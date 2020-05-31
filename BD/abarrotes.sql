@@ -39,15 +39,6 @@ CREATE TABLE `inventario` (
 -- Dumping data for table `inventario`
 --
 
-INSERT INTO `inventario` (`id_inventario`, `descripcion`, `precio`, `cantidad`) VALUES
-(1, 'huevos', 15, 18),
-(2, 'Jabon-zote', 20, 200),
-(3, 'Galletas', 12.5, 20),
-(4, 'Rollo-papel', 2.5, 30),
-(5, 'Servilletas', 15, 15),
-(6, 'Tortillas', 15, 9);
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `inventario_venta`
@@ -57,7 +48,6 @@ CREATE TABLE `inventario_venta` (
   `id_inventario_venta` int(11) NOT NULL,
   `id_venta` int(11) NOT NULL,
   `id_inventario` int(11) NOT NULL,
-  `cantidad` int(11) NOT NULL,
   `cantidad_venta` int(11) NOT NULL,
   `total` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -66,15 +56,6 @@ CREATE TABLE `inventario_venta` (
 -- Dumping data for table `inventario_venta`
 --
 
-INSERT INTO `inventario_venta` (`id_inventario_venta`, `id_venta`, `id_inventario`, `cantidad`, `cantidad_venta`, `total`) VALUES
-(1, 1, 1, 18, 5, 75),
-(2, 1, 3, 20, 5, 62.5),
-(3, 1, 4, 30, 8, 20),
-(5, 1, 2, 200, 3, 60),
-(6, 5, 6, 9, 2, 30);
-
--- --------------------------------------------------------
-
 --
 -- Table structure for table `venta`
 --
@@ -82,20 +63,12 @@ INSERT INTO `inventario_venta` (`id_inventario_venta`, `id_venta`, `id_inventari
 CREATE TABLE `venta` (
   `id_venta` int(11) NOT NULL,
   `total` float NOT NULL,
-  `finalizado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `venta`
 --
 
-INSERT INTO `venta` (`id_venta`, `total`, `finalizado`) VALUES
-(1, 217.5, 1),
-(5, 0, 0);
-
---
--- Indexes for dumped tables
---
 
 --
 -- Indexes for table `inventario`
